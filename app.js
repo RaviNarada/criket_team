@@ -7,7 +7,7 @@ const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
 
 const app = express()
-
+app.use(express.json())
 const dbPath = path.join(__dirname, 'cricketTeam.db')
 
 let db = null
@@ -82,12 +82,12 @@ app.get('/players/:playerId/', async (request, response) => {
 app.put('/players/:playerId/', async (request, response) => {
   const {playerId} = request.params
   const playerBody = request.body
-  const {playName, jerseyNumber, role} = playerBody
+  const {playerName, jerseyNumber, role} = playerBody
 
   const updatePlayerQuery = `
     UPDATE cricket_team 
     SET 
-      player_name='${playName}',
+      player_name='${playerName}',
       jersey_number =${jerseyNumber},
       role='${role}'
     where player_id=${playerId};`
